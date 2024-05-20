@@ -22,4 +22,10 @@ defmodule ExRender do
 
   @doc "Return the root of the API"
   def root, do: @root
+
+  def deserializer(map) do
+    for {key, val} <- map, into: %{} do
+      {String.to_existing_atom(Macro.underscore(key)), val}
+    end
+  end
 end

@@ -11,19 +11,37 @@ defmodule ExRender.Services do
 
   @path "/services"
 
+  alias ExRender.{Service, ServiceDetails}
+
   @doc """
   Returns a list of Render services owned by you or a team you belong to. Optionally filter
   by name, service type, region, and more.
   """
-  def list(params \\ [limit: 20]),
-    do: Req.get!(url(), params: params, auth: bearer()).body()
+  def list(params \\ [limit: 20]) do
+    case Req.get!(url(), params: params, auth: bearer()) do
+      %Req.Response{status: 200, body: services} ->
+        Enum.map(services, fn %{"cursor" => c, "service" => s} ->
+          %{cursor: c, service: deserialize(s)}
+        end)
+
+      _ ->
+        []
+    end
+  end
 
   @doc """
   Returns the details of a single Render service (specified by serviceId) that's owned by
   you or a team you belong to.
   """
-  def retrieve(service_id),
-    do: Req.get!(url() <> "/#{service_id}", auth: bearer()).body()
+  def retrieve(service_id) do
+    case Req.get!(url() <> "/#{service_id}", auth: bearer()) do
+      %Req.Response{status: 200, body: body} ->
+        deserialize(body)
+
+      _ ->
+        nil
+    end
+  end
 
   @doc "Suspend a service by id"
   def suspend(service_id) do
@@ -44,6 +62,12 @@ defmodule ExRender.Services do
     result = Req.post!(url() <> "/#{service_id}/restart", auth: bearer()).status
 
     result == 202 || result == 200
+  end
+
+  defp deserialize(map) do
+    map
+    |> Service.new()
+    |> Map.put(:service_details, ServiceDetails.new(map["serviceDetails"]))
   end
 
   defp url, do: root() <> @path

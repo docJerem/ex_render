@@ -26,6 +26,7 @@ defmodule ExRender.MixProject do
     [
       {:credo, "~> 1.7"},
       {:doctor, "~> 0.21.0", only: :dev},
+      {:exconstructor, "~> 1.2"},
       {:excoveralls, "~> 0.18.1"},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 1.2", only: :dev},
