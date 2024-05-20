@@ -29,8 +29,9 @@ defmodule ExRender.MixProject do
       {:exconstructor, "~> 1.2"},
       {:excoveralls, "~> 0.18.1"},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
-      {:mix_test_watch, "~> 1.2", only: :dev},
+      {:mix_test_watch, "~> 1.2", only: [:dev, :test]},
       {:mox, "~> 1.0", only: :test},
+      {:plug, "~> 1.16"},
       {:req, "~> 0.4.14"},
       {:sobelow, "~> 0.13.0"}
     ]

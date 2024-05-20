@@ -1,5 +1,5 @@
 defmodule ExRender.ServiceDetails do
-  @doc "Details of a Render Service"
+  @moduledoc "Details of a Render Service"
 
   @enforce_keys ~w(
     autoscaling
@@ -10,6 +10,7 @@ defmodule ExRender.ServiceDetails do
     plan
     pull_request_previews_enabled
     region
+    open_ports
     url
     )a
 

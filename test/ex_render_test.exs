@@ -2,8 +2,12 @@ defmodule ExRenderTest do
   use ExUnit.Case
   doctest ExRender
 
-  assert_raise RuntimeError, ~r/Missing API key/, fn ->
-    ExRender.api_key()
+  test "You need to set an API key" do
+    Application.put_env(:ex_render, :api_key, nil)
+
+    assert_raise RuntimeError, ~r/Missing API key/, fn ->
+      ExRender.api_key()
+    end
   end
 
   test "Return the root of the API" do

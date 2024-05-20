@@ -18,7 +18,7 @@ defmodule ExRender.Services do
   by name, service type, region, and more.
   """
   def list(params \\ [limit: 20]) do
-    case Req.get!(url(), params: params, auth: bearer()) do
+    case Req.get!(url(), options(params)) do
       %Req.Response{status: 200, body: services} ->
         Enum.map(services, fn %{"cursor" => c, "service" => s} ->
           %{cursor: c, service: deserialize(s)}
@@ -34,7 +34,7 @@ defmodule ExRender.Services do
   you or a team you belong to.
   """
   def retrieve(service_id) do
-    case Req.get!(url() <> "/#{service_id}", auth: bearer()) do
+    case Req.get!(url() <> "/#{service_id}", options()) do
       %Req.Response{status: 200, body: body} ->
         deserialize(body)
 
@@ -64,10 +64,22 @@ defmodule ExRender.Services do
     result == 202 || result == 200
   end
 
-  defp deserialize(map) do
+  defp deserialize(%{} = map) do
     map
     |> Service.new()
     |> Map.put(:service_details, ServiceDetails.new(map["serviceDetails"]))
+  end
+
+  defp options(params \\ []) do
+    Keyword.merge(
+      [
+        base_url: root(),
+        url: @path,
+        params: params,
+        auth: bearer()
+      ],
+      Application.get_env(:ex_render, :ex_render_req_options, [])
+    )
   end
 
   defp url, do: root() <> @path
