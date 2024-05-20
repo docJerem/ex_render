@@ -3,6 +3,8 @@ defmodule ExRender do
   Documentation for `ExRender`.
   """
 
+  @root "https://api.render.com/v1"
+
   @doc "Return the API key from config.exs"
   def api_key do
     Application.get_env(:ex_render, :api_key) ||
@@ -15,4 +17,9 @@ defmodule ExRender do
       config :ex_render, :api_key, "my_api_key"
       """
   end
+
+  def bearer, do: {:bearer, api_key()}
+
+  @doc "Return the root of the API"
+  def root, do: @root
 end
