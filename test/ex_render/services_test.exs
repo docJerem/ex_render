@@ -157,4 +157,60 @@ defmodule ExRender.ServicesTest do
              updated_at: "2024-03-31T19:04:02.274724Z"
            }
   end
+
+  describe "Service.restart/1" do
+    @describetag :restart
+
+    test "should be truthy if response 200" do
+      response(200)
+
+      assert Services.restart("srv-some-id")
+    end
+
+    test "should be falsy if response is not 200" do
+      response(400)
+
+      refute Services.restart("srv-some-id")
+    end
+  end
+
+  describe "Service.resume/1" do
+    @describetag :resume
+
+    test "should be truthy if response 200" do
+      response(200)
+
+      assert Services.resume("srv-some-id")
+    end
+
+    test "should be falsy if response is not 200" do
+      response(400)
+
+      refute Services.resume("srv-some-id")
+    end
+  end
+
+  describe "Service.suspend/1" do
+    @describetag :suspend
+
+    test "should be truthy if response 200" do
+      response(200)
+
+      assert Services.suspend("srv-some-id")
+    end
+
+    test "should be falsy if response is not 200" do
+      response(400)
+
+      refute Services.suspend("srv-some-id")
+    end
+  end
+
+  defp response(status_code) do
+    Req.Test.stub(ExRender, fn conn ->
+      conn
+      |> Req.Test.json("")
+      |> Map.put(:status, status_code)
+    end)
+  end
 end

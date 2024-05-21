@@ -7,7 +7,7 @@ defmodule ExRender.Services do
   See [Service Render API reference](https://api-docs.render.com/reference/service-fields) for
   more details.
   """
-  import ExRender, only: [bearer: 0, root: 0]
+  import ExRender, only: [req_options: 3]
 
   @path "/services"
 
@@ -18,7 +18,7 @@ defmodule ExRender.Services do
   by name, service type, region, and more.
   """
   def list(params \\ [limit: 20]) do
-    case Req.get!(url(), options(params)) do
+    case Req.get!(options("", params)) do
       %Req.Response{status: 200, body: services} ->
         Enum.map(services, fn %{"cursor" => c, "service" => s} ->
           %{cursor: c, service: deserialize(s)}
@@ -34,7 +34,7 @@ defmodule ExRender.Services do
   you or a team you belong to.
   """
   def retrieve(service_id) do
-    case Req.get!(url() <> "/#{service_id}", options()) do
+    case Req.get!(options("/#{service_id}")) do
       %Req.Response{status: 200, body: body} ->
         deserialize(body)
 
@@ -45,23 +45,23 @@ defmodule ExRender.Services do
 
   @doc "Suspend a service by id"
   def suspend(service_id) do
-    result = Req.post!(url() <> "/#{service_id}/suspend", auth: bearer()).status
+    result = Req.post!(options("/#{service_id}/suspend")).status
 
-    result == 202 || result == 200
+    result == 200 || result == 202
   end
 
   @doc "Resume a service by id"
   def resume(service_id) do
-    result = Req.post!(url() <> "/#{service_id}/resume", auth: bearer()).status
+    result = Req.post!(options("/#{service_id}/resume")).status
 
-    result == 202 || result == 200
+    result == 200 || result == 202
   end
 
   @doc "Restart a service by id"
   def restart(service_id) do
-    result = Req.post!(url() <> "/#{service_id}/restart", auth: bearer()).status
+    result = Req.post!(options("/#{service_id}/restart")).status
 
-    result == 202 || result == 200
+    result == 200 || result == 202
   end
 
   defp deserialize(%{} = map) do
@@ -70,17 +70,5 @@ defmodule ExRender.Services do
     |> Map.put(:service_details, ServiceDetails.new(map["serviceDetails"]))
   end
 
-  defp options(params \\ []) do
-    Keyword.merge(
-      [
-        base_url: root(),
-        url: @path,
-        params: params,
-        auth: bearer()
-      ],
-      Application.get_env(:ex_render, :ex_render_req_options, [])
-    )
-  end
-
-  defp url, do: root() <> @path
+  defp options(subpath, params \\ []), do: req_options(@path, subpath, params)
 end
