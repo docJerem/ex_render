@@ -1,5 +1,5 @@
 defmodule ExRender.Service do
-  @moduledoc "A Render service is the instance of your application"
+  @moduledoc false
 
   @enforce_keys ~w(
     auto_deploy

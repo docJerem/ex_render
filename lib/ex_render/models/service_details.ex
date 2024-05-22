@@ -1,5 +1,5 @@
 defmodule ExRender.ServiceDetails do
-  @moduledoc "Details of a Render Service"
+  @moduledoc false
 
   @enforce_keys ~w(
     autoscaling
