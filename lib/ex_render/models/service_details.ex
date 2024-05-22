@@ -1,5 +1,5 @@
 defmodule ExRender.ServiceDetails do
-  @moduledoc false
+  @moduledoc "Serialization model for Render service details of `ExRender.Service`"
 
   @enforce_keys ~w(
     autoscaling
@@ -15,6 +15,19 @@ defmodule ExRender.ServiceDetails do
     )a
 
   defstruct @enforce_keys
+
+  @type t :: %__MODULE__{
+          autoscaling: String.t(),
+          build_plan: String.t(),
+          env: String.t(),
+          env_specific_details: term(),
+          num_instances: integer(),
+          open_ports: term(),
+          plan: String.t(),
+          pull_request_previews_enabled: term(),
+          region: String.t(),
+          url: String.t()
+        }
 
   use ExConstructor
 end

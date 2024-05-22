@@ -30,7 +30,7 @@ defmodule ExRender.Services do
     end
   end
 
-  @spec retrieve(String.t()) :: nil | %Service{}
+  @spec retrieve(String.t()) :: nil | Service.t()
   @doc """
   Returns the details of a single Render service (specified by serviceId) that's owned by
   you or a team you belong to.
