@@ -7,7 +7,7 @@ defmodule ExRender.Services do
   See [Service Render API reference](https://api-docs.render.com/reference/service-fields) for
   more details.
   """
-  import ExRender, only: [req_options: 3]
+  import ExRender.HttpHelpers, only: [req_options: 3]
 
   @path "/services"
 

@@ -18,27 +18,6 @@ defmodule ExRender do
       """
   end
 
-  def bearer, do: {:bearer, api_key()}
-
   @doc "Return the root of the API"
   def root, do: @root
-
-  def deserializer(map) do
-    for {key, val} <- map, into: %{} do
-      {String.to_existing_atom(Macro.underscore(key)), val}
-    end
-  end
-
-  @doc "HTTP options of req middleware"
-  def req_options(path, subpath, params) do
-    Keyword.merge(
-      [
-        base_url: root(),
-        url: path <> subpath,
-        params: params,
-        auth: bearer()
-      ],
-      Application.get_env(:ex_render, :ex_render_req_options, [])
-    )
-  end
 end
