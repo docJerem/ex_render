@@ -1,6 +1,7 @@
 defmodule ExRender.HttpHelpers do
   @moduledoc "Collection of helpers for HTTP requests"
 
+  @spec req_options(binary(), binary(), keyword()) :: keyword()
   @doc "HTTP options of req middleware"
   def req_options(path, subpath, params) do
     Keyword.merge(

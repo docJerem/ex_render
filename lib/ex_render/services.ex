@@ -13,6 +13,7 @@ defmodule ExRender.Services do
 
   alias ExRender.{Service, ServiceDetails}
 
+  @spec list(keyword(integer())) :: list()
   @doc """
   Returns a list of Render services owned by you or a team you belong to. Optionally filter
   by name, service type, region, and more.
@@ -29,6 +30,7 @@ defmodule ExRender.Services do
     end
   end
 
+  @spec retrieve(String.t()) :: nil | %Service{}
   @doc """
   Returns the details of a single Render service (specified by serviceId) that's owned by
   you or a team you belong to.
@@ -43,6 +45,7 @@ defmodule ExRender.Services do
     end
   end
 
+  @spec suspend(String.t()) :: boolean()
   @doc "Suspend a service by id"
   def suspend(service_id) do
     result = Req.post!(options("/#{service_id}/suspend")).status
@@ -50,6 +53,7 @@ defmodule ExRender.Services do
     result == 200 || result == 202
   end
 
+  @spec resume(String.t()) :: boolean()
   @doc "Resume a service by id"
   def resume(service_id) do
     result = Req.post!(options("/#{service_id}/resume")).status
@@ -57,6 +61,7 @@ defmodule ExRender.Services do
     result == 200 || result == 202
   end
 
+  @spec restart(String.t()) :: boolean()
   @doc "Restart a service by id"
   def restart(service_id) do
     result = Req.post!(options("/#{service_id}/restart")).status

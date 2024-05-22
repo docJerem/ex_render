@@ -5,6 +5,7 @@ defmodule ExRender do
 
   @root "https://api.render.com/v1"
 
+  @spec api_key() :: String.t()
   @doc "Return the API key from config.exs"
   def api_key do
     Application.get_env(:ex_render, :api_key) ||
@@ -18,6 +19,7 @@ defmodule ExRender do
       """
   end
 
+  @spec root() :: String.t()
   @doc "Return the root of the API"
   def root, do: @root
 end
