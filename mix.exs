@@ -4,12 +4,30 @@ defmodule ExRender.MixProject do
   def project do
     [
       app: :ex_render,
+      name: "Render API",
+      description: """
+      Render's public REST API to manage your Render services and other resources with basic HTTP requests.
+
+      The API provides programmatic access to many of the same capabilities in the Render Dashboard,
+      enabling you to integrate with the platform in your own apps and scripts.
+      """,
+      package: package(),
       version: "0.1.0",
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: preferred_cli_env()
+    ]
+  end
+
+  def package do
+    [
+      licences: ["MIT"],
+      links: %{
+        "Website" => "https://api-docs.render.com/reference/introduction",
+        "Github" => "https://github.com/docJerem/ex_render"
+      }
     ]
   end
 
