@@ -57,7 +57,6 @@ defmodule ExRender.MixProject do
       maintainers: [
         "Jeremie Flandrin"
       ],
-      name: "Render API",
       licenses: ["MIT"],
       links: %{
         "Website" => "https://api-docs.render.com/reference/introduction",
