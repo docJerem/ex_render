@@ -8,6 +8,8 @@ defmodule ExRenderTest do
     assert_raise RuntimeError, ~r/Missing API key/, fn ->
       ExRender.api_key()
     end
+
+    Application.put_env(:ex_render, :api_key, "rnd_test")
   end
 
   test "Return the root of the API" do

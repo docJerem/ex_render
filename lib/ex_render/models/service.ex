@@ -1,6 +1,6 @@
 defmodule ExRender.Service do
   @moduledoc "Serialization model for Render services"
-  alias ExRender.Service.ServiceDetails
+  alias ExRender.ServiceDetails
 
   @enforce_keys ~w(
     auto_deploy
