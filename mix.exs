@@ -1,33 +1,21 @@
 defmodule ExRender.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/docJerem/ex_render"
+  @version "0.1.0"
+
   def project do
     [
       app: :ex_render,
-      name: "Render API",
-      description: """
-      Render's public REST API to manage your Render services and other resources with basic HTTP requests.
-
-      The API provides programmatic access to many of the same capabilities in the Render Dashboard,
-      enabling you to integrate with the platform in your own apps and scripts.
-      """,
-      package: package(),
-      version: "0.1.0",
-      elixir: "~> 1.16",
-      start_permanent: Mix.env() == :prod,
       deps: deps(),
+      description: description(),
+      elixir: "~> 1.16",
+      package: package(),
+      preferred_cli_env: preferred_cli_env(),
+      source_url: @source_url,
+      start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: preferred_cli_env()
-    ]
-  end
-
-  def package do
-    [
-      licences: ["MIT"],
-      links: %{
-        "Website" => "https://api-docs.render.com/reference/introduction",
-        "Github" => "https://github.com/docJerem/ex_render"
-      }
+      version: @version
     ]
   end
 
@@ -52,6 +40,29 @@ defmodule ExRender.MixProject do
       {:plug, "~> 1.16"},
       {:req, "~> 0.4.14"},
       {:sobelow, "~> 0.13.0"}
+    ]
+  end
+
+  defp description do
+    """
+    Render's public REST API to manage your Render services and other resources with basic HTTP requests.
+
+    The API provides programmatic access to many of the same capabilities in the Render Dashboard,
+    enabling you to integrate with the platform in your own apps and scripts.
+    """
+  end
+
+  defp package do
+    [
+      maintainers: [
+        "Jeremie Flandrin"
+      ],
+      name: "Render API",
+      licenses: ["MIT"],
+      links: %{
+        "Website" => "https://api-docs.render.com/reference/introduction",
+        "Github" => @source_url
+      }
     ]
   end
 
