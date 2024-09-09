@@ -38,7 +38,7 @@ defmodule ExRender.MixProject do
       {:mix_test_watch, "~> 1.2", only: [:dev, :test]},
       {:mox, "~> 1.0", only: :test},
       {:plug, "~> 1.16"},
-      {:req, "~> 0.4.14"},
+      {:req, "~> 0.5.6"},
       {:sobelow, "~> 0.13.0"}
     ]
   end
